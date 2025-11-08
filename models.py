@@ -8,13 +8,6 @@ class Product(BaseModel):
     quantity:int
 
 
-# class UpdateProduct(BaseModel):
-#     name:str | None = None
-#     description:str | None = None
-#     price:float | None = None
-#     quantity:int | None = None
-
-    
 
 
 
