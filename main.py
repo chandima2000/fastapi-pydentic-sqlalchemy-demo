@@ -47,8 +47,6 @@ def init_db():
 init_db()
 
 
-
-
 @app.get("/products")
 def get_products(db:Session = Depends(get_db)):
 
@@ -57,11 +55,14 @@ def get_products(db:Session = Depends(get_db)):
 
 
 @app.get("/products/{product_id}")
-def get_product(product_id: int):
-    for product in products:
-        if product.id == product_id:
-            return product
-    return {"error": "Product not found"}
+def get_product(product_id: int, db: Session = Depends(get_db)):
+        try:
+            product = db.query(schema.Product).filter_by(id=product_id).first()
+            if product:
+                return product
+        
+        except Exception as e:
+            return {"error": str(e)}
 
 
 @app.post("/product")
