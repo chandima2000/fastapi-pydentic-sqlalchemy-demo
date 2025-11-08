@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from models import Product
 from config import SessionLocal, engine
+from sqlalchemy.orm import Session
 import uvicorn
 import schema
 
@@ -49,7 +50,9 @@ init_db()
 
 
 @app.get("/products")
-def get_products():
+def get_products(db:Session = Depends(get_db)):
+
+    products = db.query(schema.Product).all()
     return products
 
 
